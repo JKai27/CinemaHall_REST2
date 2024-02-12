@@ -1,5 +1,6 @@
-package cinema.persistence;
+package cinema.persistence.repositories;
 
+import cinema.persistence.domain.CinemaHall;
 import org.springframework.stereotype.Repository;
 
 @Repository

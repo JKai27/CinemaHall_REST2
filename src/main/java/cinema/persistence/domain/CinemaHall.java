@@ -1,4 +1,6 @@
-package cinema.persistence;
+package cinema.persistence.domain;
+
+import cinema.persistence.domain.Seat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ public class CinemaHall {
     }
 
     private static void setPrize(Seat seat) {
-        if (seat.getTicket().getRow() > 4) {
+        if (seat.getTicket().getRow_number() > 4) {
             seat.getTicket().setPrice(8);
         } else {
             seat.getTicket().setPrice(10);

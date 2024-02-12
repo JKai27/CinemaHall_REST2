@@ -1,4 +1,4 @@
-package cinema.persistence;
+package cinema.persistence.domain;
 
 public class RefundResponse {
     private Ticket ticket;

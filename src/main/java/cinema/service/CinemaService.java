@@ -1,6 +1,10 @@
 package cinema.service;
 
-import cinema.persistence.*;
+import cinema.persistence.domain.CinemaHall;
+import cinema.persistence.domain.CinemaHallStatistics;
+import cinema.persistence.domain.RefundResponse;
+import cinema.persistence.domain.Seat;
+import cinema.persistence.repositories.CinemaHallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +29,7 @@ public class CinemaService {
     public Seat purchase(int row, int column) {
 
         for (Seat seat : cinemaHallRepository.getSeats().getSeats()) {
-            if (seat.getTicket().getRow() == row && seat.getTicket().getColumn() == column && !seat.isSeatBooked()) {
+            if (seat.getTicket().getRow_number() == row && seat.getTicket().getColumn_number() == column && !seat.isSeatBooked()) {
                 seat.setSeatBooked(true);
                 return seat;
             } else if (row > cinemaHallRepository.getSeats().getRows() || column > cinemaHallRepository.getSeats().getColumns()) {
