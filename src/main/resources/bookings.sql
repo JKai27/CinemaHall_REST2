@@ -21,6 +21,6 @@ CREATE TABLE IF NOT EXISTS seats
 );
 --getSeats for bookingId (get all seats where booking id is this )- bookingsWithSeats() in service
     -- getBookingsWithSeats() booking repository is join query
--- booking id , booking status , email, seat_id, token, seat row, seta_column, seat_status, price
-    -- SELECT * FROM bookings b JOIN seats s ON b.booikg_id = s.booking_id WHERE booking_id = ?
+-- booking id , booking status , email, seat_id, token, seat row, seat_column, seat_status, price
+    -- SELECT * FROM bookings b JOIN seats s ON b.booking_id = s.booking_id WHERE booking_id = ?
 -- dao interface , dao impl
