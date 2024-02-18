@@ -23,16 +23,16 @@ public class CinemaService {
     }
 
     public CinemaHall getCinemaHall() {
-        return cinemaHallRepository.getSeats();
+        return cinemaHallRepository.getHall();
     }
 
     public Seat purchase(int row, int column) {
 
-        for (Seat seat : cinemaHallRepository.getSeats().getSeats()) {
+        for (Seat seat : cinemaHallRepository.getHall().getSeats()) {
             if (seat.getTicket().getRow_number() == row && seat.getTicket().getColumn_number() == column && !seat.isSeatBooked()) {
                 seat.setSeatBooked(true);
                 return seat;
-            } else if (row > cinemaHallRepository.getSeats().getRows() || column > cinemaHallRepository.getSeats().getColumns()) {
+            } else if (row > cinemaHallRepository.getHall().getRows() || column > cinemaHallRepository.getHall().getColumns()) {
                 throw new NumberOfRowOrColumnIsOutOfBoundException("error" + ": " + "The number of a row or a column is out of bounds!");
             }
         }
@@ -40,9 +40,9 @@ public class CinemaService {
     }
 
     public RefundResponse returnTicket(String token) {
-        for (Seat seat : cinemaHallRepository.getSeats().getSeats()) {
+        for (Seat seat : cinemaHallRepository.getHall().getSeats()) {
             if (Objects.equals(seat.getToken(), token)) {
-                return new RefundResponse(seat.getTicket());
+                return  new RefundResponse(seat.getTicket());
             }
         }
         throw new WrongOrExpiredTokenException("error" + ": " + "Wrong token!");
@@ -55,7 +55,7 @@ public class CinemaService {
 
     public CinemaHallStatistics getCinemaHallStats(String password) {
         int income = 0;
-        int available = cinemaHallRepository.getSeats().getSeats().size();
+        int available = cinemaHallRepository.getHall().getSeats().size();
         int purchased = 0;
 
         if (password.equals("super_secret")) {

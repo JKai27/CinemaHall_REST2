@@ -7,14 +7,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ShowDao {
-    void create(Show show);
+    UUID create(Show show);
 
     Optional<Show> findOneShow(UUID Id);
 
     List<Show> findMany();
 
-    void update(int Id, Show show);
+    void update(UUID Id, Show show);
 
-    void delete(int Id);
+    void delete(UUID Id);
 
 }

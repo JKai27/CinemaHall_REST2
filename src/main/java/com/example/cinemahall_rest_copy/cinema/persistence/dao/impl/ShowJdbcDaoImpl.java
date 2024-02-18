@@ -4,6 +4,7 @@ import com.example.cinemahall_rest_copy.cinema.persistence.dao.ShowDao;
 import com.example.cinemahall_rest_copy.cinema.persistence.domain.Show;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -11,10 +12,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
+@Repository
 public class ShowJdbcDaoImpl implements ShowDao {
     private final JdbcTemplate jdbcTemplate;
-
     public ShowJdbcDaoImpl(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -30,12 +30,12 @@ public class ShowJdbcDaoImpl implements ShowDao {
                 .build();
     };
 
-    // all jdbc methods should be in Repository
     @Override
-    public void create(Show show) {
+    public UUID create(Show show) {
         jdbcTemplate.update("INSERT INTO shows (show_id, movie_title, price, total_seats, booked_seats, slot) " +
                         "VALUES (?,?,?,?,?,?) ", show.getId(), show.getMovie_title(), show.getPrice(), show.getTotal_seats(),
                 show.getBooked_seats(), show.getSlot());
+        return show.getId();
     }
 
     @Override
@@ -50,14 +50,14 @@ public class ShowJdbcDaoImpl implements ShowDao {
     }
 
     @Override
-    public void update(int Id, Show show) {
+    public void update(UUID Id, Show show) {
         jdbcTemplate.update("UPDATE shows SET movie_title = ?, price = ?, total_seats = ?, booked_seats = ?, slot = ?" +
                         " WHERE show_id = ?", show.getMovie_title(), show.getPrice(),
                 show.getTotal_seats(), show.getBooked_seats(), show.getSlot(), Id);
     }
 
     @Override
-    public void delete(int Id) {
+    public void delete(UUID Id) {
         jdbcTemplate.update("DELETE FROM shows WHERE show_id = ?", Id);
     }
 }

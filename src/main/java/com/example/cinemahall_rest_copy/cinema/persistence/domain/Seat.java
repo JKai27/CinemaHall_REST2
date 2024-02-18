@@ -12,21 +12,11 @@ public class Seat {
 
     private String token;
     private Ticket ticket;
-
     private boolean isSeatBooked;
 
 
     public static String generateToken() {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
-    }
-
-
-    public boolean isSeatBooked() {
-        return isSeatBooked;
-    }
-
-    public void setSeatBooked(boolean seatBooked) {
-        isSeatBooked = seatBooked;
     }
 }

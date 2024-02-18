@@ -17,12 +17,12 @@ public class BookingJdbcDaoImplTests {
     @Mock
     private JdbcTemplate jdbcTemplate;
     @InjectMocks
-    private BookingJdbcDaoImpl underTest;
+    private BookingJdbcDaoImpl bookingJdbcDao;
 
     @Test
     public void testThatCreateBookingGeneratesCorrectSql() {
-        Booking booking = TestDataUtil.createTestBooking();
-        underTest.create(booking);
+        Booking booking = TestDataUtil.createTestBookingA();
+        bookingJdbcDao.create(booking);
         verify(jdbcTemplate).update(eq("INSERT INTO bookings (booking_status, email) VALUES (?,?)"),
                 eq("Booked"), eq("xyz@gmail.com")
         );

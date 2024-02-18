@@ -9,11 +9,13 @@ import com.example.cinemahall_rest_copy.cinema.persistence.domain.Ticket;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
+@Repository
 @RequiredArgsConstructor
 public class BookingJdbcDaoImpl implements BookingsDao {
     private final JdbcTemplate jdbcTemplate;
@@ -33,13 +35,6 @@ public class BookingJdbcDaoImpl implements BookingsDao {
                 .build();
     };
 
-    RowMapper<Integer> bookingIdRowMapper = (rs, rowNum) -> {
-        return rs.getInt("booking_id");
-    };
-
-    // 1) Create BookingSeatsJoinRow containing all the fields in join result
-// create RowMapper for BookingSeatsJoinRow
-    // 3) convert result of List<BookingSeatsJoinRow> to single BookingDto object, use stream(group by) api or for loop
     @Override
     public void create(Booking booking) {
         jdbcTemplate.update("INSERT INTO bookings (booking_status, email) VALUES (?,?)",
@@ -68,8 +63,13 @@ public class BookingJdbcDaoImpl implements BookingsDao {
                 .build();
     }
 
+    /**
+     * to do list
+     * -- check, before booking check if seats are available
+     * -- you might need to use lock on this row (multi threaded env) shared source
+     * -- ( "SELECT FOR UPDATE" is PESSIMISTIC LOCKING also read OPTIMISTIC LOCKING
+     * -- first develop without locking and after everything works then update the queries
+     * -- to handle locking mechanism
+     */
+
 }
-// all jdbc methods should be  in Repository , service call this from repository , controller from
-// service ( Rowmapper also in Repository)
-// 2) Repository interface - dao and daoImpl repository
-// findOne, findAll, create, update, findById, delete

@@ -1,11 +1,10 @@
 package com.example.cinemahall_rest_copy.cinema.persistence.domain;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
-
-/*
-This class will be represented as an JSON Object
- */
+@Data
 public class CinemaHall {
     private final int rows;
     private final int columns;
@@ -15,7 +14,6 @@ public class CinemaHall {
         this.rows = rows;
         this.columns = columns;
         this.seats = new ArrayList<>();
-
         initializeSeats();
     }
 
@@ -38,18 +36,5 @@ public class CinemaHall {
         } else {
             seat.getTicket().setPrice(10);
         }
-    }
-
-
-    public int getRows() {
-        return rows;
-    }
-
-    public int getColumns() {
-        return columns;
-    }
-
-    public List<Seat> getSeats() {
-        return seats;
     }
 }
