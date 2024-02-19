@@ -25,11 +25,6 @@ public class ShowController {
 
     @PostMapping
     public ResponseEntity<String> createShow(@RequestBody Show show) {
-        boolean created = service.createShow(show);
-        if (created) {
-            return ResponseEntity.status(HttpStatus.CREATED).body("Show created successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Show with the same ID already exists");
-        }
+       return service.createShow(show);
     }
 }
