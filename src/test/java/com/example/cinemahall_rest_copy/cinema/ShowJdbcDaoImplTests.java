@@ -27,10 +27,11 @@ public class ShowJdbcDaoImplTests {
 
     @Test
     public void testThatCreateShowGeneratesCorrectSql() {
-
+        // given
         Show show = TestDataUtil.createTestShowA();
-
+        // when
         showJdbcDao.create(show);
+        // then
         verify(jdbcTemplate).update(
                 // match the arguments with the created show
                 eq("INSERT INTO shows (show_id, movie_title, price, total_seats, booked_seats, slot) VALUES (?,?,?,?,?,?) "),
@@ -45,9 +46,11 @@ public class ShowJdbcDaoImplTests {
 
     @Test
     public void testThatFindOneShowGeneratesCorrectSql() {
+        // given
         var id = UUID.randomUUID();
+        // when
         showJdbcDao.findOneShow(id);
-
+        // then
         verify(jdbcTemplate).query(eq("""
                 SELECT show_id, movie_title, price, total_seats, booked_seats, slot FROM shows WHERE show_id = ? LIMIT 1"""), ArgumentMatchers.<RowMapper<Show>>any(), eq(id)
         );
@@ -55,24 +58,34 @@ public class ShowJdbcDaoImplTests {
 
     @Test
     public void testThatFindManyGeneratesCorrectSql() {
+        // when
         showJdbcDao.findMany();
+        // then
         verify(jdbcTemplate).query(eq("SELECT * FROM shows"), ArgumentMatchers.<RowMapper<Show>>any()
         );
     }
 
     @Test
     public void testThatUpdateGeneratesCorrectSql() {
+        // given
         Show show = TestDataUtil.createTestShowA();
-        showJdbcDao.update(UUID.randomUUID(), show);
+        UUID id = UUID.randomUUID();
+        // when
+        showJdbcDao.update(id, show);
+        // then
         verify(jdbcTemplate).update("UPDATE shows SET movie_title = ?, price = ?, total_seats = ?, booked_seats = ?, slot = ?" +
                         " WHERE show_id = ?",
-                "Green Mile", 10.00, 81, 0, LocalDateTime.of(2024, 2, 9, 15, 0, 0), 5
+                "Green Mile", 10.00, 81, 0, LocalDateTime.of(2024, 2, 9, 15, 0, 0), id
         );
     }
 
     @Test
     public void testThatDeleteGeneratesCorrectSql() {
-        showJdbcDao.delete(UUID.randomUUID());
-        verify(jdbcTemplate).update("DELETE FROM shows WHERE show_id = ?", 5);
+        // given
+        UUID id = UUID.randomUUID();
+        // when
+        showJdbcDao.delete(id);
+        // then
+        verify(jdbcTemplate).update("DELETE FROM shows WHERE show_id = ?", id);
     }
 }

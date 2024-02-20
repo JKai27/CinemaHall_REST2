@@ -21,8 +21,11 @@ public class BookingJdbcDaoImplTests {
 
     @Test
     public void testThatCreateBookingGeneratesCorrectSql() {
+        // given
         Booking booking = TestDataUtil.createTestBookingA();
+        // when
         bookingJdbcDao.create(booking);
+        // then
         verify(jdbcTemplate).update(eq("INSERT INTO bookings (booking_status, email) VALUES (?,?)"),
                 eq("Booked"), eq("xyz@gmail.com")
         );
