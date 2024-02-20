@@ -5,7 +5,6 @@ import com.example.cinemahall_rest_copy.cinema.persistence.domain.Show;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -39,8 +38,8 @@ public class ShowJdbcDaoImpl implements ShowDao {
     }
 
     @Override
-    public Optional<Show> findOneShow(UUID Id) {
-        List<Show> result = jdbcTemplate.query("SELECT show_id, movie_title, price, total_seats, booked_seats, slot FROM shows WHERE show_id = ? LIMIT 1", showRowMapper, Id);
+    public Optional<Show> findOneShow(UUID id) {
+        List<Show> result = jdbcTemplate.query("SELECT show_id, movie_title, price, total_seats, booked_seats, slot FROM shows WHERE show_id = ? LIMIT 1", showRowMapper, id);
         return result.stream().findFirst();
     }
 

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -28,8 +29,17 @@ public class ShowService {
         }
     }
 
-    public boolean findOneShow(UUID showId) {
-        return false;
+    public Optional<Show> findOneShow(UUID showId) {
+        return showJdbcDao.findOneShow(showId);
+    }
+
+    public void update(Show updatedShow) {
+        Optional<Show> existingShow = showJdbcDao.findOneShow(updatedShow.getId());
+        if (existingShow.isPresent()) {
+            showJdbcDao.update(updatedShow.getId(), updatedShow);
+            return;
+        }
+        throw new ShowDoesNotExistException("The Show with the id: " + updatedShow.getId() + " does not exist");
     }
 }
 
